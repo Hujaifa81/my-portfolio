@@ -1,20 +1,21 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { MoveUpRight } from "lucide-react";
-import Link from "next/link";
+import { ArrowUpRight, FolderOpen, Github } from "lucide-react";
 import { useRef } from "react";
 
 export default function ProjectCard({
     title,
     category,
     image,
-    href,
+    onClick,
+    tech = []
 }: {
     title: string;
     category: string;
     image: string;
-    href: string;
+    onClick: () => void;
+    tech?: string[];
 }) {
     const ref = useRef<HTMLDivElement>(null);
 
@@ -24,8 +25,8 @@ export default function ProjectCard({
     const mouseXSpring = useSpring(x);
     const mouseYSpring = useSpring(y);
 
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["17.5deg", "-17.5deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-17.5deg", "17.5deg"]);
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         const rect = ref.current!.getBoundingClientRect();
@@ -45,36 +46,66 @@ export default function ProjectCard({
     };
 
     return (
-        <Link href={href} className="group relative block h-[400px] w-full">
-            <motion.div
-                ref={ref}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
+        <motion.div
+            ref={ref}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{
+                rotateX,
+                rotateY,
+                transformStyle: "preserve-3d",
+            }}
+            onClick={onClick}
+            className="group relative h-[450px] w-full rounded-3xl bg-neutral-900 border border-neutral-800 transition-all duration-500 hover:border-neon-violet/50 cursor-pointer"
+        >
+            <div
                 style={{
-                    rotateX,
-                    rotateY,
+                    transform: "translateZ(50px)",
                     transformStyle: "preserve-3d",
                 }}
-                className="relative h-full w-full rounded-3xl bg-neutral-900 border border-neutral-800 transition-colors group-hover:border-neon-violet/50"
+                className="absolute inset-4 flex flex-col justify-end rounded-2xl bg-[#0F0F0F] overflow-hidden shadow-2xl"
             >
-                <div
-                    style={{
-                        transform: "translateZ(75px)",
-                        transformStyle: "preserve-3d",
-                    }}
-                    className="absolute inset-4 grid place-content-center rounded-xl bg-void shadow-2xl"
-                >
-                    {/* Abstract Placeholder Art */}
-                    <div className="absolute inset-0 h-full w-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-800 to-neutral-950 opacity-50" />
-                    <div className="relative z-10 p-6">
-                        <h3 className="text-3xl font-bold uppercase text-white group-hover:text-neon-cyan transition-colors">{title}</h3>
-                        <p className="mt-2 text-sm text-neutral-400">{category}</p>
-                    </div>
+                {/* Image Placeholder */}
+                <div className="absolute inset-x-0 top-0 h-2/3 bg-neutral-800 group-hover:scale-105 transition-transform duration-700 ease-out">
+                    {/* Placeholder Gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-neutral-800 to-black opacity-80" />
+
+                    {/* Overlay on Hover */}
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
                 </div>
 
-                {/* Glow Element */}
-                <div className="absolute inset-0 -z-10 bg-neon-violet/20 blur-3xl opacity-0 group-hover:opacity-50 transition-opacity duration-500" />
-            </motion.div>
-        </Link>
+                {/* Content */}
+                <div className="relative z-10 p-6 bg-gradient-to-t from-black via-black/90 to-transparent pt-20">
+                    <div className="flex justify-between items-start mb-2">
+                        <div>
+                            <span className="text-neon-cyan text-xs font-mono tracking-wider uppercase mb-1 block">
+                                {category}
+                            </span>
+                            <h3 className="text-2xl font-bold uppercase text-white group-hover:text-neon-violet transition-colors">
+                                {title}
+                            </h3>
+                        </div>
+                        <div className="size-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-neon-violet group-hover:text-black transition-all">
+                            <ArrowUpRight className="size-5" />
+                        </div>
+                    </div>
+
+                    {/* Tech Tags */}
+                    <div className="flex flex-wrap gap-2 mt-4">
+                        {tech.slice(0, 3).map((t, i) => (
+                            <span key={i} className="px-2 py-1 text-[10px] uppercase font-bold text-zinc-500 bg-white/5 rounded border border-white/5 group-hover:border-white/20 transition-colors">
+                                {t}
+                            </span>
+                        ))}
+                        {tech.length > 3 && (
+                            <span className="px-2 py-1 text-[10px] text-zinc-600">+{tech.length - 3}</span>
+                        )}
+                    </div>
+                </div>
+            </div>
+
+            {/* Glow Element */}
+            <div className="absolute inset-0 -z-10 bg-neon-violet/20 blur-3xl opacity-0 group-hover:opacity-40 transition-opacity duration-500" />
+        </motion.div>
     );
 }

@@ -136,12 +136,12 @@ function TimelineItem({ stage, index, total }: { stage: ProcessStage; index: num
                 <motion.div 
                     className="absolute left-1/2 -translate-x-1/2 pointer-events-none z-10"
                     style={{
-                        top: '100%',
+                        top: '50%',
                         width: '600px',
-                        height: '300px'
+                        height: 'calc(100% + 6rem)'
                     }}
                 >
-                    <svg className="w-full h-full" viewBox="0 0 600 300" preserveAspectRatio="none">
+                    <svg className="w-full h-full" viewBox="0 0 600 100" preserveAspectRatio="none">
                         <defs>
                             <linearGradient id={`flowGradient-${index}`} x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" stopColor="#00F0FF" stopOpacity="1" />
@@ -158,14 +158,14 @@ function TimelineItem({ stage, index, total }: { stage: ProcessStage; index: num
                             </filter>
                         </defs>
                         
-                        {/* Smooth flowing curved path connecting cards */}
+                        {/* Smooth flowing curved path connecting center nodes */}
                         <motion.path
                             d={isLeft 
-                                ? "M 300,0 C 300,80 150,120 150,180 C 150,240 300,260 300,300"
-                                : "M 300,0 C 300,80 450,120 450,180 C 450,240 300,260 300,300"
+                                ? "M 300,0 C 300,25 150,40 150,50 C 150,70 220,85 280,95 C 290,97 295,99 300,100"
+                                : "M 300,0 C 300,25 450,40 450,50 C 450,70 380,85 320,95 C 310,97 305,99 300,100"
                             }
                             stroke={`url(#flowGradient-${index})`}
-                            strokeWidth="3"
+                            strokeWidth="2"
                             fill="none"
                             strokeLinecap="round"
                             filter={`url(#flowGlow-${index})`}
@@ -173,22 +173,21 @@ function TimelineItem({ stage, index, total }: { stage: ProcessStage; index: num
                             whileInView={{ pathLength: 1, opacity: 1 }}
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{ 
-                                duration: 1.5, 
+                                duration: 2, 
                                 ease: "easeInOut" 
                             }}
                         />
                         
                         {/* Connection nodes along the path */}
                         {[
-                            { x: 300, y: 80 },
-                            { x: isLeft ? 150 : 450, y: 180 },
-                            { x: 300, y: 260 }
+                            { x: 300, y: 25 },
+                            { x: isLeft ? 150 : 450, y: 50 }
                         ].map((pos, i) => (
                             <motion.g key={`node-${i}`}>
                                 <motion.circle
                                     cx={pos.x}
                                     cy={pos.y}
-                                    r="6"
+                                    
                                     fill="#00F0FF"
                                     filter={`url(#flowGlow-${index})`}
                                     initial={{ scale: 0, opacity: 0 }}
@@ -205,7 +204,7 @@ function TimelineItem({ stage, index, total }: { stage: ProcessStage; index: num
                                 <motion.circle
                                     cx={pos.x}
                                     cy={pos.y}
-                                    r="12"
+                                    r="8"
                                     fill="none"
                                     stroke="#00F0FF"
                                     strokeWidth="2"
@@ -226,7 +225,7 @@ function TimelineItem({ stage, index, total }: { stage: ProcessStage; index: num
                         
                         {/* Flowing particle traveling along the path */}
                         <motion.circle
-                            r="8"
+                            r="5"
                             fill="#00F0FF"
                             filter={`url(#flowGlow-${index})`}
                             initial={{ 
@@ -240,21 +239,21 @@ function TimelineItem({ stage, index, total }: { stage: ProcessStage; index: num
                             }}
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{
-                                duration: 1.5,
+                                duration: 2,
                                 ease: "easeInOut"
                             }}
                             style={{
                                 offsetPath: isLeft 
-                                    ? `path('M 300,0 C 300,80 150,120 150,180 C 150,240 300,260 300,300')`
-                                    : `path('M 300,0 C 300,80 450,120 450,180 C 450,240 300,260 300,300')`
+                                    ? `path('M 300,0 C 300,25 150,40 150,50 C 150,70 220,85 280,95 C 290,97 295,99 300,100')`
+                                    : `path('M 300,0 C 300,25 450,40 450,50 C 450,70 380,85 320,95 C 310,97 305,99 300,100')`
                             } as any}
                         />
                         
                         {/* Additional subtle trail particles */}
-                        {[0.2, 0.5, 0.8].map((offset, i) => (
+                        {[0.3, 0.6].map((offset, i) => (
                             <motion.circle
                                 key={`trail-${i}`}
-                                r="4"
+                                r="3"
                                 fill="#7C3AED"
                                 opacity="0.6"
                                 filter={`url(#flowGlow-${index})`}
@@ -270,13 +269,13 @@ function TimelineItem({ stage, index, total }: { stage: ProcessStage; index: num
                                 viewport={{ once: true, margin: "-100px" }}
                                 transition={{
                                     delay: 0.2 + i * 0.3,
-                                    duration: 1,
+                                    duration: 1.5,
                                     ease: "easeInOut"
                                 }}
                                 style={{
                                     offsetPath: isLeft 
-                                        ? `path('M 300,0 C 300,80 150,120 150,180 C 150,240 300,260 300,300')`
-                                        : `path('M 300,0 C 300,80 450,120 450,180 C 450,240 300,260 300,300')`
+                                        ? `path('M 300,0 C 300,25 150,40 150,50 C 150,70 220,85 280,95 C 290,97 295,99 300,100')`
+                                        : `path('M 300,0 C 300,25 450,40 450,50 C 450,70 380,85 320,95 C 310,97 305,99 300,100')`
                                 } as any}
                             />
                         ))}

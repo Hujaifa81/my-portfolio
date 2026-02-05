@@ -4,7 +4,6 @@ import { motion, useInView, useMotionValue, useTransform, animate } from "framer
 import { useEffect, useRef, useState } from "react";
 import { Terminal, Cpu, Clock, Code, Coffee, Rocket, Activity, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 
 export default function AboutTerminal() {
     return (
@@ -12,15 +11,15 @@ export default function AboutTerminal() {
             <div className="container mx-auto px-4 max-w-6xl">
                 <GlitchTitle text="System Identity" />
 
-                <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
 
                     {/* Left: Terminal Info */}
-                    <div className="order-2 lg:order-1 w-full rounded-xl border border-white/10 bg-[#0d0d0d] shadow-2xl overflow-hidden relative group">
+                    <div className="order-2 lg:order-1 w-full rounded-xl border border-white/10 bg-[#0d0d0d] shadow-2xl overflow-hidden relative group h-full flex flex-col">
                         {/* Glow Effect behind terminal */}
                         <div className="absolute -inset-1 bg-gradient-to-r from-neon-violet to-neon-cyan opacity-20 blur-xl group-hover:opacity-40 transition-opacity duration-500" />
 
                         {/* Terminal Chrome */}
-                        <div className="relative flex items-center gap-2 bg-white/5 px-4 py-3 border-b border-white/5 z-10 backdrop-blur-md">
+                        <div className="relative flex items-center gap-2 bg-white/5 px-4 py-3 border-b border-white/5 z-10 backdrop-blur-md shrink-0">
                             <div className="size-3 rounded-full bg-red-500/80" />
                             <div className="size-3 rounded-full bg-yellow-500/80" />
                             <div className="size-3 rounded-full bg-green-500/80" />
@@ -28,8 +27,8 @@ export default function AboutTerminal() {
                         </div>
 
                         {/* Terminal Content */}
-                        <div className="relative p-6 font-mono text-sm md:text-base text-zinc-300 space-y-6 z-10 bg-[#050505]/90">
-                            <div className="space-y-2">
+                        <div className="relative p-6 font-mono text-sm md:text-base text-zinc-300 space-y-6 z-10 bg-[#050505]/90 flex-1 flex flex-col">
+                            <div className="space-y-2 flex-1">
                                 <div className="flex gap-2 text-green-400">
                                     <span>➜</span>
                                     <span className="text-blue-400">~</span>
@@ -41,7 +40,7 @@ export default function AboutTerminal() {
                                 />
                             </div>
 
-                            <div className="space-y-4 pt-4 border-t border-white/5">
+                            <div className="space-y-4 pt-4 border-t border-white/5 mt-auto">
                                 <div className="text-zinc-500 text-xs uppercase tracking-widest mb-4"> // System Metrics</div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <StatMetric label="Uptime" value="5" suffix=" Years" icon={Clock} color="text-neon-cyan" />
@@ -53,9 +52,9 @@ export default function AboutTerminal() {
                         </div>
                     </div>
 
-                    {/* Right: Cyber Portrait */}
-                    <div className="order-1 lg:order-2 flex justify-center lg:justify-end relative">
-                        <CyberPortrait />
+                    {/* Right: System Specs / Code Panel */}
+                    <div className="order-1 lg:order-2 w-full h-full">
+                        <SystemSpecs />
                     </div>
 
                 </div>
@@ -64,45 +63,97 @@ export default function AboutTerminal() {
     );
 }
 
-function CyberPortrait() {
+function SystemSpecs() {
     return (
-        <div className="relative w-full max-w-md aspect-square group">
-            <div className="absolute inset-0 bg-gradient-to-br from-neon-violet to-neon-cyan rounded-2xl opacity-20 blur-2xl group-hover:opacity-40 transition-opacity duration-500" />
+        <div className="relative w-full rounded-xl border border-white/10 bg-[#0d0d0d] shadow-2xl overflow-hidden group h-full flex flex-col">
+            {/* Ambient Glow */}
+            <div className="absolute -inset-1 bg-gradient-to-l from-neon-violet to-neon-cyan opacity-10 blur-xl group-hover:opacity-30 transition-opacity duration-500" />
 
-            {/* Frame */}
-            <div className="relative h-full w-full rounded-2xl border border-white/10 bg-white/5 p-2 backdrop-blur-sm overflow-hidden">
-                {/* Decorative Corners */}
-                <div className="absolute top-0 left-0 h-8 w-8 border-t-2 border-l-2 border-neon-cyan z-20" />
-                <div className="absolute bottom-0 right-0 h-8 w-8 border-b-2 border-r-2 border-neon-violet z-20" />
-
-                {/* Image Container */}
-                <div className="relative h-full w-full rounded-xl overflow-hidden grayscale contrast-125 hover:grayscale-0 transition-[filter] duration-500">
-                    <Image
-                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=800&q=80"
-                        alt="Profile"
-                        fill
-                        className="object-cover"
-                    />
-
-                    {/* Scanline Overlay */}
-                    <div className="absolute inset-0 z-10 bg-[linear-gradient(to_bottom,transparent_50%,rgba(0,0,0,0.5)_50%)] bg-[length:100%_4px] pointer-events-none opacity-20" />
-
-                    {/* Scanning Bar Animation */}
-                    <motion.div
-                        className="absolute inset-x-0 h-1 bg-neon-cyan/50 z-20 shadow-[0_0_20px_rgba(0,240,255,0.8)]"
-                        animate={{ top: ["0%", "100%", "0%"] }}
-                        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                    />
-
-                    {/* Glitch Overlay on Hover */}
-                    <div className="absolute inset-0 bg-neon-violet/20 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-100" />
-                </div>
-
-                {/* Floating "Status" Tags */}
-                <div className="absolute bottom-4 left-4 z-20 flex gap-2">
-                    <div className="px-2 py-1 bg-black/50 backdrop-blur border border-neon-cyan/30 rounded text-[10px] font-mono text-neon-cyan uppercase">
-                        Status: Online
+            {/* Header / Tabs */}
+            <div className="relative flex items-center justify-between bg-white/5 px-4 py-3 border-b border-white/5 z-10 backdrop-blur-md">
+                <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5 opacity-50">
+                        <div className="size-2.5 rounded-full bg-zinc-600" />
+                        <div className="size-2.5 rounded-full bg-zinc-600" />
+                        <div className="size-2.5 rounded-full bg-zinc-600" />
                     </div>
+                    <div className="ml-4 flex gap-1">
+                        <div className="px-3 py-1 bg-[#0d0d0d] border border-white/5 rounded-t-lg text-xs font-mono text-neon-cyan border-b-black -mb-[13px] z-20">
+                            config.json
+                        </div>
+                        {/* <div className="px-3 py-1 text-xs font-mono text-zinc-600">
+                            skills.ts
+                        </div> */}
+                    </div>
+                </div>
+                <div className="text-[10px] font-mono text-zinc-500">READ ONLY</div>
+            </div>
+
+            {/* Code Content */}
+            <div className="relative p-6 font-mono text-sm overflow-hidden bg-[#050505]/95 flex-1">
+                {/* Line Numbers and Code Grid */}
+                <div className="flex gap-4">
+                    <div className="flex flex-col text-right text-zinc-700 select-none">
+                        {Array.from({ length: 12 }).map((_, i) => (
+                            <span key={i} className="leading-relaxed">{i + 1}</span>
+                        ))}
+                    </div>
+                    <div className="flex-1 text-zinc-300 leading-relaxed overflow-x-auto whitespace-pre">
+                        <div><span className="text-neon-violet">const</span> <span className="text-white">USER_PROFILE</span> = {"{"}</div>
+                        <div className="pl-4">
+                            <span className="text-neon-cyan">name</span>: <span className="text-acid-green">"Al-Amin"</span>,
+                        </div>
+                        <div className="pl-4">
+                            <span className="text-neon-cyan">role</span>: <span className="text-acid-green">"Full Stack Developer"</span>,
+                        </div>
+                        <div className="pl-4">
+                            <span className="text-neon-cyan">location</span>: <span className="text-acid-green">"Dhaka, Bangladesh"</span>,
+                        </div>
+                        <div className="pl-4">
+                            <span className="text-neon-cyan">status</span>: <span className="text-acid-green">"Available for Hire"</span>,
+                        </div>
+                        <div className="pl-4">
+                            <span className="text-neon-cyan">traits</span>: [
+                        </div>
+                        <div className="pl-8">
+                            <span className="text-acid-green">"Creative"</span>, <span className="text-acid-green">"Pixel-Perfect"</span>, <span className="text-acid-green">"Fast"</span>
+                        </div>
+                        <div className="pl-4">],</div>
+                        <div className="pl-4">
+                            <span className="text-neon-cyan">hireable</span>: <span className="text-neon-violet">true</span>,
+                        </div>
+                        <div className="pl-4">
+                            <span className="text-neon-cyan">workMode</span>: <span className="text-acid-green">"Remote / Hybrid"</span>,
+                        </div>
+                        <div className="pl-4">
+                            <span className="text-neon-cyan">currentFocus</span>: <span className="text-acid-green">"Interactive UI / 3D"</span>,
+                        </div>
+                        <div className="pl-4">
+                            <span className="text-neon-cyan">languages</span>: [
+                        </div>
+                        <div className="pl-8">
+                            <span className="text-acid-green">"TypeScript"</span>, <span className="text-acid-green">"Python"</span>, <span className="text-acid-green">"C++"</span>,<span className="text-acid-green">"C#"</span>,<span className="text-acid-green">"Java"</span>,<span className="text-acid-green">"JavaScript"</span>
+                        </div>
+                        <div className="pl-4">],</div>
+                        <div>{"}"};</div>
+                        <motion.div
+                            className="w-2.5 h-5 bg-neon-cyan mt-1"
+                            animate={{ opacity: [0, 1, 0] }}
+                            transition={{ duration: 0.8, repeat: Infinity }}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {/* Status Bar */}
+            <div className="relative flex items-center justify-between bg-white/5 px-4 py-1.5 border-t border-white/5 z-10">
+                <div className="flex gap-4 text-[10px] text-zinc-500 font-mono">
+                    <span>UTF-8</span>
+                    <span>JSON</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                    <div className="size-2 rounded-full bg-neon-cyan animate-pulse" />
+                    <span className="text-[10px] text-neon-cyan font-mono">Ln 12, Col 1</span>
                 </div>
             </div>
         </div>
@@ -147,7 +198,7 @@ function TypewriterText({ text, delay = 0 }: { text: string, delay?: number }) {
                 } else {
                     clearInterval(timer);
                 }
-            }, 30);
+            }, 30); // Speed
             return timer;
         }
 
@@ -160,13 +211,19 @@ function TypewriterText({ text, delay = 0 }: { text: string, delay?: number }) {
     }, [isInView, text, delay]);
 
     return (
-        <div ref={ref} className="min-h-[3rem]">
-            <span>{displayedText}</span>
-            <motion.span
-                animate={{ opacity: [0, 1, 0] }}
-                transition={{ repeat: Infinity, duration: 0.8 }}
-                className="inline-block w-2.5 h-5 bg-neon-cyan align-middle ml-1"
-            />
+        <div ref={ref} className="relative min-h-[3rem]">
+            {/* Invisible full text to reserve space */}
+            <span className="opacity-0 select-none block">{text}</span>
+
+            {/* Visible typing overlay */}
+            <div className="absolute top-0 left-0 w-full h-full">
+                <span>{displayedText}</span>
+                <motion.span
+                    animate={{ opacity: [0, 1, 0] }}
+                    transition={{ repeat: Infinity, duration: 0.8 }}
+                    className="inline-block w-2.5 h-5 bg-neon-cyan align-middle ml-1"
+                />
+            </div>
         </div>
     );
 }
