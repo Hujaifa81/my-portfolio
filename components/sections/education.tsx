@@ -39,12 +39,7 @@ export default function Education() {
                             transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
                         />
 
-                        {/* Scan Lines */}
-                        <motion.div
-                            className="absolute inset-x-0 h-[3px] bg-gradient-to-r from-transparent via-neon-cyan to-transparent"
-                            animate={{ top: ["-5%", "105%"] }}
-                            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                        />
+
 
                         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
 
@@ -165,6 +160,7 @@ export default function Education() {
                                 </motion.div>
                             </div>
                         </div>
+
 
                         {/* Bottom Gradient Bar */}
                         <motion.div

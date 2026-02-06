@@ -1,111 +1,135 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ArrowUpRight, FolderOpen, Github } from "lucide-react";
-import { useRef } from "react";
+import { ArrowUpRight, Github, ExternalLink } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
-export default function ProjectCard({
-    title,
-    category,
-    image,
-    onClick,
-    tech = []
-}: {
+interface ProjectCardProps {
+    slug: string;
     title: string;
     category: string;
     image: string;
-    onClick: () => void;
-    tech?: string[];
-}) {
-    const ref = useRef<HTMLDivElement>(null);
+    description: string;
+    tech: string[];
+    year: string;
+    index: number;
+    color: string;
+    links?: { demo: string; github: string };
+}
 
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-
-    const mouseXSpring = useSpring(x);
-    const mouseYSpring = useSpring(y);
-
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const rect = ref.current!.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-        const xPct = mouseX / width - 0.5;
-        const yPct = mouseY / height - 0.5;
-        x.set(xPct);
-        y.set(yPct);
-    };
-
-    const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
-    };
-
+export default function ProjectCard({
+    slug,
+    title,
+    category,
+    image,
+    description,
+    tech,
+    year,
+    index,
+    color,
+    links
+}: ProjectCardProps) {
     return (
-        <motion.div
-            ref={ref}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{
-                rotateX,
-                rotateY,
-                transformStyle: "preserve-3d",
-            }}
-            onClick={onClick}
-            className="group relative h-[450px] w-full rounded-3xl bg-neutral-900 border border-neutral-800 transition-all duration-500 hover:border-neon-violet/50 cursor-pointer"
-        >
-            <div
-                style={{
-                    transform: "translateZ(50px)",
-                    transformStyle: "preserve-3d",
-                }}
-                className="absolute inset-4 flex flex-col justify-end rounded-2xl bg-[#0F0F0F] overflow-hidden shadow-2xl"
-            >
-                {/* Image Placeholder */}
-                <div className="absolute inset-x-0 top-0 h-2/3 bg-neutral-800 group-hover:scale-105 transition-transform duration-700 ease-out">
-                    {/* Placeholder Gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-neutral-800 to-black opacity-80" />
+        <div className="flex flex-col h-full w-full bg-[#121212] rounded-3xl border border-white/5 overflow-hidden group shadow-2xl relative">
+            {/* Background Image / Pattern */}
+            <div className="absolute inset-0 z-0">
+                {image ? (
+                    <Image
+                        src={image}
+                        alt={title}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-40"
+                    />
+                ) : (
+                    <div
+                        className="absolute inset-0 opacity-20"
+                        style={{
+                            background: `radial-gradient(circle at 50% 50%, ${color}, transparent 70%)`
+                        }}
+                    />
+                )}
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent" />
+            </div>
 
-                    {/* Overlay on Hover */}
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
+            {/* Content Section */}
+            <div className="relative z-10 p-6 pb-8 md:p-8 md:pb-10 flex flex-col justify-between h-full">
+
+                {/* Top Row - Year & Category */}
+                <div className="flex items-center gap-3">
+                    <span className="text-sm font-mono text-zinc-400">{year}</span>
+                    <div className="h-px w-8 bg-zinc-700" />
+                    <span
+                        className="text-xs font-mono font-bold uppercase tracking-wider px-2 py-1 rounded bg-white/5 border border-white/10"
+                        style={{ color: color, borderColor: `${color}33` }}
+                    >
+                        {category}
+                    </span>
                 </div>
 
-                {/* Content */}
-                <div className="relative z-10 p-6 bg-gradient-to-t from-black via-black/90 to-transparent pt-20">
-                    <div className="flex justify-between items-start mb-2">
-                        <div>
-                            <span className="text-neon-cyan text-xs font-mono tracking-wider uppercase mb-1 block">
-                                {category}
-                            </span>
-                            <h3 className="text-2xl font-bold uppercase text-white group-hover:text-neon-violet transition-colors">
-                                {title}
-                            </h3>
-                        </div>
-                        <div className="size-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-neon-violet group-hover:text-black transition-all">
-                            <ArrowUpRight className="size-5" />
-                        </div>
-                    </div>
+                {/* Bottom Content */}
+                <div className="mt-12">
+                    {/* Title */}
+                    <h3 className="text-3xl md:text-5xl font-bold uppercase text-white mb-5 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-zinc-400 transition-all">
+                        {title}
+                    </h3>
 
-                    {/* Tech Tags */}
-                    <div className="flex flex-wrap gap-2 mt-4">
-                        {tech.slice(0, 3).map((t, i) => (
-                            <span key={i} className="px-2 py-1 text-[10px] uppercase font-bold text-zinc-500 bg-white/5 rounded border border-white/5 group-hover:border-white/20 transition-colors">
+                    {/* Description */}
+                    <p className="text-zinc-400 text-sm md:text-lg max-w-xl line-clamp-2 md:line-clamp-3 mb-6">
+                        {description}
+                    </p>
+
+                    {/* Tech Stack */}
+                    <div className="flex flex-wrap gap-2 mb-8">
+                        {tech.slice(0, 4).map((t, i) => (
+                            <span
+                                key={i}
+                                className="px-3 py-1 text-xs uppercase font-bold text-zinc-400 bg-white/5 rounded-full border border-white/5"
+                            >
                                 {t}
                             </span>
                         ))}
-                        {tech.length > 3 && (
-                            <span className="px-2 py-1 text-[10px] text-zinc-600">+{tech.length - 3}</span>
+                    </div>
+
+                    {/* Bottom Actions */}
+                    <div className="flex items-center gap-4 relative z-20">
+                        <Link
+                            href={`/projects/${slug}`}
+                            className="flex items-center gap-2 px-5 py-3 rounded-full bg-white text-black font-bold text-sm hover:scale-105 active:scale-95 transition-all"
+                            style={{ backgroundColor: color }}
+                        >
+                            <span>See Details</span>
+                            <ArrowUpRight className="size-4" />
+                        </Link>
+
+                        {links?.demo && (
+                            <a
+                                href={links.demo}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-3 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors"
+                                title="Live Demo"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <ExternalLink className="size-5" />
+                            </a>
+                        )}
+
+                        {links?.github && (
+                            <a
+                                href={links.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-3 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors"
+                                title="Source Code"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <Github className="size-5" />
+                            </a>
                         )}
                     </div>
                 </div>
             </div>
-
-            {/* Glow Element */}
-            <div className="absolute inset-0 -z-10 bg-neon-violet/20 blur-3xl opacity-0 group-hover:opacity-40 transition-opacity duration-500" />
-        </motion.div>
+        </div>
     );
 }
