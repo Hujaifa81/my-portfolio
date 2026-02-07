@@ -1,0 +1,56 @@
+---
+title: "Terminal Aesthetics: CLI Design for the Modern Web"
+excerpt: "The command line is making a comeback. Here's how to bring hacker culture aesthetics to web interfaces."
+date: "2026-02-05"
+category: "Design"
+coverImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800"
+tags: ["Terminal", "CLI", "Aesthetics", "Retro"]
+featured: false
+---
+
+There's something primal about the terminal. Pure text. No hiding behind gradients and drop shadows. Just you, the machine, and raw information.
+
+## The Terminal Renaissance
+
+Developers never left the command line, but now the aesthetic is bleeding into mainstream design. TUIs (Terminal User Interfaces) are having a moment.
+
+### Elements of Terminal Design
+
+The visual language is minimal but precise:
+
+- **Monospace typography** — every character aligned in the grid
+- **Cursor blinking** — life indicator of an active system
+- **Scan line effects** — CRT nostalgia as design choice
+- **ASCII art** — graphics through constraint
+
+## Building Terminal Components
+
+The About section of this portfolio uses terminal aesthetics:
+
+```tsx
+const TerminalText = ({ text }: { text: string }) => {
+  const [displayed, setDisplayed] = useState('');
+  
+  useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      setDisplayed(text.slice(0, i));
+      i++;
+      if (i > text.length) clearInterval(interval);
+    }, 50);
+    return () => clearInterval(interval);
+  }, [text]);
+  
+  return <span>{displayed}<span className="cursor">_</span></span>;
+};
+```
+
+> "In a world of abstractions, the terminal offers truth. There's no loading spinner lying to you about progress."
+
+## The Psychology of Hacker Aesthetics
+
+Terminal design signals competence. It says "I speak the machine's language." This isn't gatekeeping—it's a form of trust signaling. When users see terminal output, they expect precision.
+
+The green-on-black isn't just nostalgic. It's functional. High contrast, low eye strain, timeless.
+
+Welcome to the grid.

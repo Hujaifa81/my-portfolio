@@ -7,9 +7,13 @@ import Experience from "@/components/sections/experience";
 import Achievements from "@/components/sections/achievements";
 import Education from "@/components/sections/education";
 import ProcessTimeline from "@/components/sections/process-timeline";
+import BlogGrid from "@/components/sections/blog-grid";
 import Contact from "@/components/sections/contact";
+import { getAllPosts } from "@/lib/blog";
 
 export default function Home() {
+  const posts = getAllPosts();
+
   return (
     <main className="w-full">
       <Hero />
@@ -21,6 +25,7 @@ export default function Home() {
       <SkillsOrbit />
       <ProcessTimeline />
       <Projects />
+      <BlogGrid posts={posts} />
       <Contact />
     </main>
   );
