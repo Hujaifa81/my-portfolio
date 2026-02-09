@@ -186,9 +186,8 @@ const TimelineCard = ({
 
       {/* Card container with alternating layout */}
       <motion.div
-        className={`grid lg:grid-cols-2 gap-8 lg:gap-16 items-center ${
-          isEven ? "" : "lg:[direction:rtl]"
-        }`}
+        className={`grid lg:grid-cols-2 gap-8 lg:gap-16 items-center ${isEven ? "" : "lg:[direction:rtl]"
+          }`}
         initial={{ opacity: 0, x: isEven ? -50 : 50 }}
         animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: isEven ? -50 : 50 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -251,10 +250,10 @@ const TimelineCard = ({
               </h3>
 
               {/* Excerpt with inline Read More */}
-              <p className="text-white/50 text-sm leading-relaxed mb-4">
-                {post.excerpt.length > 80 ? post.excerpt.slice(0, 80).trim() : post.excerpt}
-                <span className="text-neon-cyan font-medium group-hover:text-white transition-colors duration-300">
-                  {" "}... Read More <ArrowUpRight className="inline w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <p className="text-white/50 text-sm leading-relaxed">
+                {post.excerpt.length > 70 ? `${post.excerpt.slice(0, 70).trim()}... ` : post.excerpt}
+                <span className="inline text-neon-cyan font-medium group-hover:text-white transition-colors duration-300">
+                  Read More <ArrowUpRight className="inline-block w-3 h-3 ml-0.5 mb-0.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               </p>
 
@@ -280,9 +279,8 @@ const TimelineCard = ({
 
         {/* Date indicator (opposite side) */}
         <div
-          className={`hidden lg:flex flex-col ${
-            isEven ? "items-start pl-12" : "items-end pr-12 [direction:ltr]"
-          }`}
+          className={`hidden lg:flex flex-col ${isEven ? "items-start pl-12" : "items-end pr-12 [direction:ltr]"
+            }`}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}

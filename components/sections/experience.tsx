@@ -6,26 +6,49 @@ import { cn } from "@/lib/utils";
 
 export default function Experience() {
     return (
-        <section id="experience" className="relative w-full py-32 bg-void-black text-white overflow-hidden">
-            <div className="container mx-auto px-4 max-w-5xl">
+        <section id="experience" className="relative w-full py-12 bg-void-black text-white overflow-hidden">
+            {/* Unified Grid Pattern */}
+            <div className="absolute inset-0 bg-grid-pattern pointer-events-none opacity-30" />
+            <div className="container mx-auto px-4 max-w-6xl relative z-10">
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="mb-16 text-center relative"
+                    className="mb-12 text-center"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
                 >
-                    <h2 className="font-display text-5xl font-bold uppercase md:text-7xl bg-gradient-to-r from-neon-violet via-neon-cyan to-neon-violet bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(124,58,237,0.5)]">
-                        Deployment <span className="bg-gradient-to-r from-neon-cyan via-white to-neon-cyan bg-clip-text">Status</span>
-                    </h2>
-
-                    {/* Glitch Shadow Effect */}
-                    <motion.h2
-                        className="absolute inset-0 font-display text-5xl font-bold uppercase md:text-7xl text-neon-violet opacity-30 mix-blend-screen pointer-events-none"
-                        animate={{ x: [-2, 2, -1, 0], y: [1, -1, 0] }}
-                        transition={{ repeat: Infinity, duration: 0.2, repeatType: "mirror", repeatDelay: 4 }}
+                    <motion.div
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neon-cyan/30 bg-neon-cyan/5 mb-6 backdrop-blur-sm"
+                        variants={{
+                            hidden: { opacity: 0, scale: 0.8, rotate: -15 },
+                            visible: { opacity: 1, scale: 1, rotate: 0 }
+                        }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
                     >
-                        Deployment Status
+                        <Briefcase className="w-4 h-4 text-neon-cyan" />
+                        <span className="text-xs font-mono uppercase tracking-widest text-neon-cyan">Experience</span>
+                    </motion.div>
+
+                    <motion.h2
+                        variants={{
+                            hidden: { opacity: 0, y: 30 },
+                            visible: { opacity: 1, y: 0 }
+                        }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+                        className="font-display text-5xl font-bold uppercase text-white md:text-7xl mb-6"
+                    >
+                        Deployment <span className="text-neon-cyan">Status</span>
                     </motion.h2>
+
+                    <motion.p
+                        variants={{
+                            hidden: { opacity: 0, y: 20 },
+                            visible: { opacity: 1, y: 0 }
+                        }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
+                        className="text-zinc-400 max-w-xl mx-auto text-lg"
+                    >
+                        Tracing the timeline of professional deployments and key missions.
+                    </motion.p>
                 </motion.div>
 
                 <div className="relative">

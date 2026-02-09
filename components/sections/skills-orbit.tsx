@@ -15,15 +15,51 @@ export default function SkillsOrbit() {
         <section
             ref={containerRef}
             id="skills"
-            className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-void-black py-24"
+            className="relative flex w-full flex-col items-center justify-center overflow-hidden bg-void-black py-12"
         >
-            <div className="container relative z-10 mx-auto px-4 text-center mb-16">
-                <h2 className="font-display text-5xl font-bold uppercase text-white md:text-7xl">
-                    Orbital <span className="text-neon-cyan">Tech Stack</span>
-                </h2>
-                <p className="mt-4 text-zinc-400">
-                    The ecosystem of modern technologies I command.
-                </p>
+            {/* Unified Grid Pattern */}
+            <div className="absolute inset-0 bg-grid-pattern pointer-events-none opacity-30" />
+            <div className="container relative z-10 mx-auto px-4 max-w-6xl text-center">
+                <motion.div
+                    className="mb-12 text-center"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                >
+                    <motion.div
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neon-cyan/30 bg-neon-cyan/5 mb-6 backdrop-blur-sm"
+                        variants={{
+                            hidden: { opacity: 0, scale: 0.8, rotate: -15 },
+                            visible: { opacity: 1, scale: 1, rotate: 0 }
+                        }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                    >
+                        <Atom className="w-4 h-4 text-neon-cyan" />
+                        <span className="text-xs font-mono uppercase tracking-widest text-neon-cyan">Technologies</span>
+                    </motion.div>
+
+                    <motion.h2
+                        variants={{
+                            hidden: { opacity: 0, y: 30 },
+                            visible: { opacity: 1, y: 0 }
+                        }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+                        className="font-display text-5xl font-bold uppercase text-white md:text-7xl mb-6"
+                    >
+                        Orbital <span className="text-neon-cyan">Tech Stack</span>
+                    </motion.h2>
+
+                    <motion.p
+                        variants={{
+                            hidden: { opacity: 0, y: 20 },
+                            visible: { opacity: 1, y: 0 }
+                        }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
+                        className="text-zinc-400 text-lg max-w-2xl mx-auto"
+                    >
+                        The ecosystem of modern technologies I command.
+                    </motion.p>
+                </motion.div>
             </div>
 
             {/* Mobile: Horizontal Scroll (Visible < md) */}

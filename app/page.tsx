@@ -20,11 +20,11 @@ export default function Home() {
       <AboutTerminal />
       <WhatIDo />
       <Experience />
+      <SkillsOrbit />
+      <Projects />
       <Achievements />
       <Education />
-      <SkillsOrbit />
       <ProcessTimeline />
-      <Projects />
       <BlogGrid posts={posts} />
       <Contact />
     </main>

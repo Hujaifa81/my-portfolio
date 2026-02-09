@@ -1,27 +1,54 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { PenTool, Laptop, Server, Zap, Globe, Layers } from "lucide-react";
+import { PenTool, Laptop, Server, Zap, Globe, Layers, Cpu } from "lucide-react";
 
 export default function WhatIDo() {
     return (
-        <section className="py-32 bg-void-black relative overflow-hidden">
-            {/* Background Grid */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:50px_50px] pointer-events-none opacity-20" />
+        <section id="services" className="relative w-full py-12 bg-void-black overflow-hidden">
+            {/* Unified Grid Pattern */}
+            <div className="absolute inset-0 bg-grid-pattern pointer-events-none opacity-30" />
 
-            <div className="container mx-auto px-4 max-w-7xl relative z-10">
+            <div className="container mx-auto px-4 max-w-6xl relative z-10">
                 <motion.div
-                    className="mb-20"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    className="mb-12 text-center relative z-10"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
                 >
-                    <h2 className="font-display text-5xl font-bold uppercase text-white md:text-7xl bg-gradient-to-r from-neon-violet via-neon-cyan to-neon-violet bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(124,58,237,0.5)]">
-                        Operational <span className="bg-gradient-to-r from-neon-cyan via-white to-neon-cyan bg-clip-text">Capabilities</span>
-                    </h2>
-                    <p className="mt-4 text-zinc-400 max-w-xl text-lg">
+                    <motion.div
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neon-cyan/30 bg-neon-cyan/5 mb-6 backdrop-blur-sm"
+                        variants={{
+                            hidden: { opacity: 0, scale: 0.8, rotate: -15 },
+                            visible: { opacity: 1, scale: 1, rotate: 0 }
+                        }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                    >
+                        <Cpu className="w-4 h-4 text-neon-cyan" />
+                        <span className="text-xs font-mono uppercase tracking-widest text-neon-cyan">Services</span>
+                    </motion.div>
+
+                    <motion.h2
+                        variants={{
+                            hidden: { opacity: 0, y: 30 },
+                            visible: { opacity: 1, y: 0 }
+                        }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+                        className="font-display text-5xl font-bold uppercase text-white md:text-7xl mb-6"
+                    >
+                        Operational <span className="text-neon-cyan">Capabilities</span>
+                    </motion.h2>
+
+                    <motion.p
+                        variants={{
+                            hidden: { opacity: 0, y: 20 },
+                            visible: { opacity: 1, y: 0 }
+                        }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
+                        className="text-zinc-400 max-w-xl mx-auto text-lg"
+                    >
                         Deploying advanced solutions across the digital spectrum.
-                    </p>
+                    </motion.p>
                 </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

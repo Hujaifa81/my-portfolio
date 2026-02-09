@@ -1,180 +1,147 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GraduationCap, Calendar, Award, BookOpen, Star } from "lucide-react";
+import { GraduationCap, Calendar, Award, BookOpen, MapPin, Code, Trophy } from "lucide-react";
 
 export default function Education() {
     return (
-        <section className="relative w-full py-32 bg-void-black overflow-hidden">
-            <div className="container mx-auto px-4 max-w-4xl">
+        <section id="education" className="relative w-full py-12 bg-void-black overflow-hidden">
+            <div className="container mx-auto px-4 max-w-6xl">
+                <motion.div
+                    className="mb-12 text-center"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                >
+                    <motion.div
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neon-cyan/30 bg-neon-cyan/5 mb-6 backdrop-blur-sm"
+                        variants={{
+                            hidden: { opacity: 0, scale: 0.8, rotate: -15 },
+                            visible: { opacity: 1, scale: 1, rotate: 0 }
+                        }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                    >
+                        <GraduationCap className="w-4 h-4 text-neon-cyan" />
+                        <span className="text-xs font-mono uppercase tracking-widest text-neon-cyan">Education</span>
+                    </motion.div>
+
+                    <motion.h2
+                        variants={{
+                            hidden: { opacity: 0, y: 30 },
+                            visible: { opacity: 1, y: 0 }
+                        }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+                        className="font-display text-5xl font-bold uppercase text-white md:text-7xl mb-6"
+                    >
+                        Academic <span className="text-neon-cyan">Protocol</span>
+                    </motion.h2>
+
+                    <motion.p
+                        variants={{
+                            hidden: { opacity: 0, y: 20 },
+                            visible: { opacity: 1, y: 0 }
+                        }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
+                        className="text-zinc-400 max-w-xl mx-auto text-lg"
+                    >
+                        Academic certifications and specialized training protocols.
+                    </motion.p>
+                </motion.div>
+
+                {/* Education Card - Centered Layout */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mb-16 text-center"
+                    transition={{ duration: 0.5 }}
+                    className="relative group max-w-4xl mx-auto"
                 >
-                    <h2 className="font-display text-5xl font-bold uppercase md:text-7xl bg-gradient-to-r from-neon-violet via-neon-cyan to-neon-violet bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(124,58,237,0.5)]">
-                        Academic <span className="bg-gradient-to-r from-neon-cyan via-white to-neon-cyan bg-clip-text">Protocol</span>
-                    </h2>
-                </motion.div>
+                    <div className="relative rounded-2xl border border-white/10 bg-white/[0.02] p-8 md:p-10 overflow-hidden hover:border-neon-cyan/30 transition-all duration-500">
 
-                {/* Single Featured Education Card */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, type: "spring" }}
-                    className="relative"
-                >
-                    {/* Hexagon Frame Container */}
-                    <div className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-[#0d0d0d] to-[#050505] p-12 overflow-hidden group">
+                        {/* Glow effect */}
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            <div className="absolute top-0 left-1/4 w-1/2 h-px bg-gradient-to-r from-transparent via-neon-cyan/50 to-transparent" />
+                        </div>
 
-                        {/* Animated Rotating Background */}
-                        <motion.div
-                            className="absolute inset-0 opacity-30"
-                            style={{
-                                background: "radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.2), rgba(124, 58, 237, 0.2), transparent)"
-                            }}
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                        />
-
-
-
-                        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-
-                            {/* Left: Hexagon Badge */}
-                            <div className="flex justify-center lg:justify-start">
+                        <div className="relative z-10">
+                            {/* Header Row */}
+                            <div className="flex flex-col md:flex-row md:items-start gap-6 mb-8">
+                                {/* Icon */}
                                 <motion.div
-                                    className="relative"
+                                    className="w-16 h-16 rounded-2xl border border-neon-cyan/30 bg-neon-cyan/5 flex items-center justify-center shrink-0"
                                     whileHover={{ scale: 1.05, rotate: 5 }}
                                     transition={{ type: "spring", stiffness: 300 }}
                                 >
-                                    {/* Hexagon Shape */}
-                                    <div className="relative w-48 h-48 flex items-center justify-center">
-                                        <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full">
-                                            <motion.polygon
-                                                points="50 1 95 25 95 75 50 99 5 75 5 25"
-                                                className="fill-none stroke-neon-cyan"
-                                                strokeWidth="0.5"
-                                                initial={{ pathLength: 0 }}
-                                                whileInView={{ pathLength: 1 }}
-                                                transition={{ duration: 2, ease: "easeInOut" }}
-                                            />
-                                            <motion.polygon
-                                                points="50 1 95 25 95 75 50 99 5 75 5 25"
-                                                className="fill-neon-cyan/10"
-                                                animate={{ opacity: [0.1, 0.3, 0.1] }}
-                                                transition={{ duration: 3, repeat: Infinity }}
-                                            />
-                                        </svg>
-
-                                        {/* Center Icon */}
-                                        <motion.div
-                                            className="relative z-10 flex flex-col items-center gap-2"
-                                            animate={{ y: [0, -5, 0] }}
-                                            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                                        >
-                                            <GraduationCap className="size-16 text-neon-cyan drop-shadow-[0_0_20px_rgba(0,240,255,1)]" />
-                                            <div className="font-mono text-xs text-neon-violet uppercase tracking-wider">BSc</div>
-                                        </motion.div>
-
-                                        {/* Orbiting Particles */}
-                                        {[0, 120, 240].map((angle, i) => (
-                                            <motion.div
-                                                key={i}
-                                                className="absolute size-2 rounded-full bg-neon-cyan shadow-[0_0_10px_rgba(0,240,255,0.8)]"
-                                                style={{
-                                                    top: "50%",
-                                                    left: "50%",
-                                                }}
-                                                animate={{
-                                                    x: [
-                                                        Math.cos((angle * Math.PI) / 180) * 60,
-                                                        Math.cos(((angle + 360) * Math.PI) / 180) * 60,
-                                                    ],
-                                                    y: [
-                                                        Math.sin((angle * Math.PI) / 180) * 60,
-                                                        Math.sin(((angle + 360) * Math.PI) / 180) * 60,
-                                                    ],
-                                                }}
-                                                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-                                            />
-                                        ))}
-                                    </div>
+                                    <GraduationCap className="w-8 h-8 text-neon-cyan" />
                                 </motion.div>
+
+                                {/* Title & Info */}
+                                <div className="flex-1">
+                                    <h3 className="font-display text-2xl md:text-3xl font-bold uppercase text-white mb-2">
+                                        Computer Science & <span className="text-neon-cyan">Engineering</span>
+                                    </h3>
+
+                                    <div className="flex flex-wrap items-center gap-4 text-zinc-400">
+                                        <div className="flex items-center gap-2">
+                                            <MapPin className="w-4 h-4 text-neon-cyan" />
+                                            <span>University of Technology, Dhaka</span>
+                                        </div>
+                                        <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5">
+                                            <Calendar className="w-3.5 h-3.5 text-neon-cyan" />
+                                            <span className="font-mono text-sm">2021 - 2025</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-                            {/* Right: Details */}
-                            <div>
-                                <motion.div
-                                    initial={{ x: 50, opacity: 0 }}
-                                    whileInView={{ x: 0, opacity: 1 }}
-                                    transition={{ delay: 0.3 }}
-                                >
-                                    <h3 className="font-display text-3xl font-bold uppercase bg-gradient-to-r from-white via-neon-cyan to-white bg-clip-text text-transparent group-hover:from-neon-cyan group-hover:via-neon-violet group-hover:to-neon-cyan transition-all duration-500 mb-3 drop-shadow-[0_0_15px_rgba(0,240,255,0.4)]">
-                                        Computer Science
-                                    </h3>
-                                    <p className="text-neon-violet font-bold mb-4 text-xl">
-                                        University of Technology
-                                    </p>
+                            {/* Description */}
+                            <p className="text-zinc-400 leading-relaxed mb-8">
+                                Specialized in full-stack development, algorithms, and distributed systems.
+                                Completed thesis on &apos;Performance Optimization in Modern Web Applications&apos;.
+                                Focused on building scalable architectures and modern frontend frameworks.
+                            </p>
 
-                                    {/* Duration Badge */}
-                                    <div className="flex items-center gap-2 mb-6 inline-flex rounded-full border border-neon-cyan/30 bg-neon-cyan/10 px-4 py-2">
-                                        <Calendar className="size-4 text-neon-cyan" />
-                                        <span className="font-mono text-sm text-white">2021 - 2025</span>
-                                    </div>
+                            {/* Stats Grid - 4 columns */}
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] text-center hover:border-neon-cyan/30 transition-colors">
+                                    <Award className="w-5 h-5 text-neon-cyan mx-auto mb-2" />
+                                    <div className="text-xs text-zinc-500 uppercase tracking-wider mb-1">CGPA</div>
+                                    <div className="font-mono text-white font-bold">3.8/4.0</div>
+                                </div>
 
-                                    <p className="text-zinc-300 text-sm leading-relaxed mb-6">
-                                        Specialized in full-stack development, algorithms, and distributed systems. Completed thesis on 'Performance Optimization in Modern Web Applications'.
-                                    </p>
+                                <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] text-center hover:border-neon-violet/30 transition-colors">
+                                    <BookOpen className="w-5 h-5 text-neon-violet mx-auto mb-2" />
+                                    <div className="text-xs text-zinc-500 uppercase tracking-wider mb-1">Major</div>
+                                    <div className="font-mono text-white font-bold">Software</div>
+                                </div>
 
-                                    {/* Stats Row */}
-                                    <div className="flex flex-wrap gap-4">
-                                        <motion.div
-                                            className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-neon-cyan/50 transition-colors"
-                                            whileHover={{ scale: 1.05 }}
-                                        >
-                                            <div className="p-2 rounded-lg bg-gradient-to-br from-neon-cyan/20 to-neon-violet/20">
-                                                <Award className="size-5 text-neon-cyan" />
-                                            </div>
-                                            <div>
-                                                <div className="text-[10px] text-zinc-500 uppercase tracking-wider">CGPA</div>
-                                                <div className="font-mono text-white font-bold text-lg">3.8/4.0</div>
-                                            </div>
-                                        </motion.div>
+                                <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] text-center hover:border-neon-cyan/30 transition-colors">
+                                    <Code className="w-5 h-5 text-neon-cyan mx-auto mb-2" />
+                                    <div className="text-xs text-zinc-500 uppercase tracking-wider mb-1">Projects</div>
+                                    <div className="font-mono text-white font-bold">15+</div>
+                                </div>
 
-                                        <motion.div
-                                            className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-neon-violet/50 transition-colors"
-                                            whileHover={{ scale: 1.05 }}
-                                        >
-                                            <div className="p-2 rounded-lg bg-gradient-to-br from-neon-violet/20 to-neon-cyan/20">
-                                                <BookOpen className="size-5 text-neon-violet" />
-                                            </div>
-                                            <div>
-                                                <div className="text-[10px] text-zinc-500 uppercase tracking-wider">Major</div>
-                                                <div className="text-white font-medium">Software Eng.</div>
-                                            </div>
-                                        </motion.div>
-                                    </div>
-                                </motion.div>
+                                <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02] text-center hover:border-neon-violet/30 transition-colors">
+                                    <Trophy className="w-5 h-5 text-neon-violet mx-auto mb-2" />
+                                    <div className="text-xs text-zinc-500 uppercase tracking-wider mb-1">Awards</div>
+                                    <div className="font-mono text-white font-bold">3</div>
+                                </div>
                             </div>
                         </div>
 
-
-                        {/* Bottom Gradient Bar */}
+                        {/* Bottom accent line */}
                         <motion.div
-                            className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-neon-violet via-neon-cyan to-neon-violet"
+                            className="absolute bottom-0 left-0 h-px bg-gradient-to-r from-neon-cyan via-neon-violet to-neon-cyan"
                             initial={{ width: "0%" }}
                             whileInView={{ width: "100%" }}
-                            transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
+                            transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
                         />
                     </div>
                 </motion.div>
             </div>
 
-            {/* Background Grid */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:50px_50px] pointer-events-none opacity-20" />
+            {/* Unified Grid Pattern */}
+            <div className="absolute inset-0 bg-grid-pattern pointer-events-none opacity-30" />
         </section>
     );
 }

@@ -5,40 +5,59 @@ import { Award, Trophy, GraduationCap, Target, Star, Sparkles, Lock, Unlock } fr
 import { cn } from "@/lib/utils";
 
 const RARITY_COLORS = {
-    legendary: "from-amber-400 to-orange-600 border-amber-500/50 shadow-amber-500/20 text-amber-400",
-    epic: "from-neon-violet to-fuchsia-600 border-neon-violet/50 shadow-neon-violet/20 text-neon-violet",
-    rare: "from-neon-cyan to-blue-600 border-neon-cyan/50 shadow-neon-cyan/20 text-neon-cyan",
+    legendary: "from-neon-cyan to-neon-violet border-neon-cyan/50 shadow-neon-cyan/20 text-neon-cyan",
+    epic: "from-neon-violet to-neon-cyan border-neon-violet/50 shadow-neon-violet/20 text-neon-violet",
+    rare: "from-neon-cyan to-neon-violet border-neon-cyan/50 shadow-neon-cyan/20 text-neon-cyan",
 };
 
 const RARITY_BG = {
-    legendary: "bg-amber-500/10 hover:bg-amber-500/20",
+    legendary: "bg-neon-cyan/10 hover:bg-neon-cyan/20",
     epic: "bg-neon-violet/10 hover:bg-neon-violet/20",
     rare: "bg-neon-cyan/10 hover:bg-neon-cyan/20",
 }
 
 export default function Achievements() {
     return (
-        <section className="relative w-full py-32 bg-void-black overflow-hidden">
+        <section id="achievements" className="relative w-full py-12 bg-void-black overflow-hidden">
             <div className="container mx-auto px-4 max-w-6xl">
-                <div className="mb-20 text-center relative z-10">
+                <motion.div
+                    className="mb-12 text-center relative z-10"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                >
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neon-cyan/30 bg-neon-cyan/5 mb-6 backdrop-blur-sm"
+                        variants={{
+                            hidden: { opacity: 0, scale: 0.8, rotate: -15 },
+                            visible: { opacity: 1, scale: 1, rotate: 0 }
+                        }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
                     >
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-neon-cyan mb-4">
-                            <Trophy className="size-3" />
-                            <span>HALL OF FAME</span>
-                        </div>
-                        <h2 className="font-display text-5xl font-bold uppercase text-white md:text-7xl mb-4 tracking-tight">
-                            Trophy <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-violet to-neon-cyan">Registry</span>
-                        </h2>
-                        <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
-                            Unlocked milestones from the academic battleground and professional quests.
-                        </p>
+                        <Trophy className="size-4 text-neon-cyan" />
+                        <span className="text-xs font-mono uppercase tracking-widest text-neon-cyan">Hall of Fame</span>
                     </motion.div>
-                </div>
-
+                    <motion.h2
+                        variants={{
+                            hidden: { opacity: 0, y: 30 },
+                            visible: { opacity: 1, y: 0 }
+                        }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+                        className="font-display text-5xl font-bold uppercase text-white md:text-7xl mb-6"
+                    >
+                        Trophy <span className="text-neon-cyan">Registry</span>
+                    </motion.h2>
+                    <motion.p
+                        variants={{
+                            hidden: { opacity: 0, y: 20 },
+                            visible: { opacity: 1, y: 0 }
+                        }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
+                        className="text-zinc-400 text-lg max-w-2xl mx-auto"
+                    >
+                        Unlocked milestones from the academic battleground and professional quests.
+                    </motion.p>
+                </motion.div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
                     {ACHIEVEMENTS.map((achievement, i) => (
                         <AchievementCard key={i} data={achievement} index={i} />
@@ -46,8 +65,8 @@ export default function Achievements() {
                 </div>
             </div>
 
-            {/* Background Grid Pattern */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:50px_50px] pointer-events-none opacity-20" />
+            {/* Unified Grid Pattern */}
+            <div className="absolute inset-0 bg-grid-pattern pointer-events-none opacity-30" />
 
             {/* Ambient Glows */}
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-violet/10 rounded-full blur-[100px] pointer-events-none" />
@@ -95,7 +114,7 @@ function AchievementCard({ data, index }: { data: any, index: number }) {
 
                 {/* XP / Score */}
                 <div className="mt-6 font-mono text-xs text-zinc-500 flex items-center gap-1.5 code-text">
-                    <Star className="size-3 text-yellow-500 filled" />
+                    <Star className="size-3 text-neon-cyan filled" />
                     <span>+{data.xp} XP</span>
                 </div>
             </div>
@@ -119,7 +138,7 @@ function AchievementCard({ data, index }: { data: any, index: number }) {
 
                 <div className="flex items-center justify-between pt-4 border-t border-white/5">
                     <div className="flex items-center gap-2">
-                        <span className="size-1.5 rounded-full bg-green-500 animate-pulse" />
+                        <span className="size-1.5 rounded-full bg-neon-cyan animate-pulse" />
                         <span className="font-mono text-xs text-zinc-500 space-x-2">
                             <span>UNLOCKED</span>
                             <span className="text-zinc-700">|</span>

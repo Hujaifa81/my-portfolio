@@ -70,7 +70,7 @@ function TransmissionStatus({ status }: { status: "idle" | "sending" | "sent" | 
   const statusConfig = {
     idle: { color: "bg-zinc-500", text: "STANDBY", pulse: false },
     sending: { color: "bg-neon-cyan", text: "TRANSMITTING", pulse: true },
-    sent: { color: "bg-acid-green", text: "DELIVERED", pulse: false },
+    sent: { color: "bg-neon-cyan", text: "DELIVERED", pulse: false },
     error: { color: "bg-red-500", text: "FAILED", pulse: true },
   };
 
@@ -124,8 +124,8 @@ function TerminalInput({
       </div>
       <div className={cn(
         "relative rounded-lg border transition-all duration-300",
-        isFocused 
-          ? "border-neon-cyan/50 bg-neon-cyan/5" 
+        isFocused
+          ? "border-neon-cyan/50 bg-neon-cyan/5"
           : "border-white/10 bg-white/[0.02]"
       )}>
         {isTextarea ? (
@@ -151,7 +151,7 @@ function TerminalInput({
             className="w-full bg-transparent px-4 py-3 font-mono text-sm text-white placeholder:text-zinc-600 focus:outline-none"
           />
         )}
-        
+
         {/* Cursor blink effect when focused */}
         {isFocused && (
           <motion.div
@@ -208,7 +208,7 @@ function ContactInfoCard({
         {href ? (
           <ArrowUpRight className="w-4 h-4 text-zinc-600 group-hover:text-neon-cyan transition-colors" />
         ) : copied ? (
-          <Check className="w-4 h-4 text-acid-green" />
+          <Check className="w-4 h-4 text-neon-cyan" />
         ) : (
           <Copy className="w-4 h-4 text-zinc-600 group-hover:text-neon-cyan transition-colors" />
         )}
@@ -246,11 +246,11 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
-    
+
     // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 2000));
     setStatus("sent");
-    
+
     // Reset after showing success
     setTimeout(() => {
       setFormData({ name: "", email: "", message: "" });
@@ -261,16 +261,16 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative w-full py-32 bg-void-black overflow-hidden"
+      className="relative w-full py-12 bg-void-black overflow-hidden"
     >
       {/* Background effects */}
       <div className="absolute inset-0">
-        {/* Grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:60px_60px] opacity-30" />
-        
+        {/* Unified Grid Pattern */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-30" />
+
         {/* Radial gradient */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(0,240,255,0.1)_0%,transparent_60%)]" />
-        
+
         {/* Floating particles */}
         <FloatingParticles />
       </div>
@@ -290,16 +290,18 @@ export default function Contact() {
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
         {/* Header */}
         <motion.div
-          className="text-center mb-20"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="text-center mb-12"
         >
           <motion.div
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neon-cyan/30 bg-neon-cyan/5 mb-6 backdrop-blur-sm"
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 200, delay: 0.1 }}
+            variants={{
+              hidden: { opacity: 0, scale: 0.8, rotate: -15 },
+              visible: { opacity: 1, scale: 1, rotate: 0 }
+            }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <Radio className="w-4 h-4 text-neon-cyan" />
             <span className="text-xs font-mono uppercase tracking-widest text-neon-cyan">
@@ -307,16 +309,27 @@ export default function Contact() {
             </span>
           </motion.div>
 
-          <h2 className="font-display text-5xl md:text-7xl font-bold uppercase mb-6">
-            <span className="block text-white">Initiate</span>
-            <span className="bg-gradient-to-r from-neon-cyan via-neon-violet to-neon-cyan bg-clip-text text-transparent">
-              Transmission
-            </span>
-          </h2>
+          <motion.h2
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0 }
+            }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+            className="font-display text-5xl font-bold uppercase text-white md:text-7xl mb-6"
+          >
+            Initiate <span className="text-neon-cyan">Transmission</span>
+          </motion.h2>
 
-          <p className="text-zinc-400 text-lg max-w-xl mx-auto">
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 }
+            }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
+            className="text-zinc-400 text-lg max-w-xl mx-auto"
+          >
             Ready to collaborate on your next digital venture. Send a signal.
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-8 items-stretch">
@@ -390,45 +403,45 @@ export default function Contact() {
                     className={cn(
                       "group relative w-full py-4 rounded-xl font-mono text-sm uppercase tracking-widest overflow-hidden transition-all duration-300",
                       status === "sent"
-                        ? "bg-acid-green/20 border border-acid-green/50 text-acid-green"
+                        ? "bg-neon-cyan/20 border border-neon-cyan/50 text-neon-cyan"
                         : "bg-neon-cyan/10 border border-neon-cyan/30 text-neon-cyan hover:bg-neon-cyan hover:text-void-black"
                     )}
                     whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.99 }}
                   >
-                  {/* Button scanning effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-                    initial={{ x: "-100%" }}
-                    animate={status === "sending" ? { x: "100%" } : {}}
-                    transition={{ duration: 1, repeat: status === "sending" ? Infinity : 0 }}
-                  />
+                    {/* Button scanning effect */}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                      initial={{ x: "-100%" }}
+                      animate={status === "sending" ? { x: "100%" } : {}}
+                      transition={{ duration: 1, repeat: status === "sending" ? Infinity : 0 }}
+                    />
 
-                  <span className="relative flex items-center justify-center gap-3">
-                    {status === "idle" && (
-                      <>
-                        <Send className="w-4 h-4" />
-                        <span>Transmit Signal</span>
-                      </>
-                    )}
-                    {status === "sending" && (
-                      <>
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                        >
-                          <Waves className="w-4 h-4" />
-                        </motion.div>
-                        <span>Establishing Connection...</span>
-                      </>
-                    )}
-                    {status === "sent" && (
-                      <>
-                        <Check className="w-4 h-4" />
-                        <span>Transmission Complete</span>
-                      </>
-                    )}
-                  </span>
+                    <span className="relative flex items-center justify-center gap-3">
+                      {status === "idle" && (
+                        <>
+                          <Send className="w-4 h-4" />
+                          <span>Transmit Signal</span>
+                        </>
+                      )}
+                      {status === "sending" && (
+                        <>
+                          <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          >
+                            <Waves className="w-4 h-4" />
+                          </motion.div>
+                          <span>Establishing Connection...</span>
+                        </>
+                      )}
+                      {status === "sent" && (
+                        <>
+                          <Check className="w-4 h-4" />
+                          <span>Transmission Complete</span>
+                        </>
+                      )}
+                    </span>
                   </motion.button>
 
                   {/* Terminal prompt */}
@@ -478,8 +491,6 @@ export default function Contact() {
                 delay={0.5}
               />
             </div>
-
-           
 
             {/* Social links */}
             <motion.div

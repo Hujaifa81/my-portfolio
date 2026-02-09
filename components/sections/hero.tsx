@@ -3,7 +3,7 @@
 import { motion, useMotionValue, useTransform, animate, useMotionTemplate, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import MagneticButton from "@/components/ui/magnetic-button";
-import { ArrowRight, Download, Code, Sparkles, Zap } from "lucide-react";
+import { ArrowRight, Download, Code, Sparkles, Zap, Mouse } from "lucide-react";
 
 const ROLES = ["Fullstack Developer", "UI/UX Engineer", "Creative Thinker", "Problem Solver"];
 
@@ -19,17 +19,19 @@ export default function Hero() {
 
     return (
         <section
-            className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-void-black text-white px-4 md:px-10"
+            id="home"
+            className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-void-black text-white px-4"
             onMouseMove={handleMouseMove}
         >
+            {/* Unified Grid Pattern */}
+            <div className="absolute inset-0 bg-grid-pattern pointer-events-none opacity-50" />
             <div className="mask-spotlight absolute inset-0 pointer-events-none z-10 select-none">
                 <Spotlight mouseX={mouseX} mouseY={mouseY} />
             </div>
 
-            <div className="container relative z-20 flex flex-col-reverse items-center justify-center gap-8 lg:flex-row lg:justify-between lg:gap-0">
-
+            {/* Main Content Container */}
+            <div className="container mx-auto max-w-6xl relative z-20 flex flex-col-reverse items-center justify-center gap-8 lg:flex-row lg:justify-between lg:gap-0">
                 <div className="flex flex-col items-center text-center lg:items-start lg:text-left lg:w-[60%]">
-
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -45,16 +47,25 @@ export default function Hero() {
                         </span>
                     </motion.div>
 
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                        className="text-lg text-zinc-400 mb-2"
+                    >
+                        Hi, I&apos;m
+                    </motion.p>
+
                     <h1 className="font-display text-4xl font-bold uppercase leading-[0.9] tracking-tighter sm:text-5xl lg:text-6xl">
                         <motion.span
                             initial={{ y: "100%", opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
-                            className="block mb-2"
+                            className="block mb-2 text-white"
                         >
-                            I Am A
+                            Md Abu <span className="text-neon-cyan">Hujaifa</span>
                         </motion.span>
-                        <div className="w-full min-h-[1.2em]">
+                        <div className="w-full min-h-[1.2em] whitespace-nowrap">
                             <Typewriter roles={ROLES} />
                         </div>
                     </h1>
@@ -86,11 +97,29 @@ export default function Hero() {
                     </motion.div>
                 </div>
 
-                {/* Right Side: Image/Visual */}
                 <div className="relative flex justify-center lg:w-[40%] lg:justify-end">
                     <HeroImage />
                 </div>
             </div>
+
+            {/* Scroll Indicator */}
+            <motion.div
+                initial={{ opacity: 0, y: 0 }}
+                animate={{ opacity: 1, y: [0, 10, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+            >
+                <div className="flex flex-col items-center gap-2">
+                    <div className="w-6 h-10 rounded-full border border-white/20 flex justify-center p-1.5">
+                        <motion.div
+                            animate={{ y: [0, 15, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                            className="w-1 h-2 rounded-full bg-neon-cyan"
+                        />
+                    </div>
+                    <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-zinc-500">Scroll</span>
+                </div>
+            </motion.div>
 
             {/* Background Elements */}
             <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
@@ -200,7 +229,7 @@ function HeroImage() {
             />
             <FloatingBadge
                 text="Clean Code"
-                icon={<Zap className="h-3 w-3 text-acid-green" />}
+                icon={<Zap className="h-3 w-3 text-neon-cyan" />}
                 className="absolute -bottom-4 right-10"
                 delay={2}
             />
@@ -217,7 +246,7 @@ function Spotlight({ mouseX, mouseY }: { mouseX: any; mouseY: any }) {
             className="absolute inset-0 z-10 opacity-40 mix-blend-soft-light"
             style={style}
         >
-            <div className="h-full w-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-150 contrast-150"></div>
+            <div className="h-full w-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 brightness-150 contrast-150"></div>
         </motion.div>
     );
 }

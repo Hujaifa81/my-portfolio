@@ -7,11 +7,53 @@ import { cn } from "@/lib/utils";
 
 export default function AboutTerminal() {
     return (
-        <section id="about" className="relative w-full py-32 bg-void-black flex items-center justify-center overflow-hidden">
-            <div className="container mx-auto px-4 max-w-6xl">
-                <GlitchTitle text="System Identity" />
+        <section id="about" className="relative w-full pt-0 pb-12 bg-void-black flex items-center justify-center overflow-hidden">
+            {/* Unified Grid Pattern */}
+            <div className="absolute inset-0 bg-grid-pattern pointer-events-none opacity-30" />
+            <div className="container mx-auto px-4 max-w-6xl relative z-10">
+                {/* Section Header */}
+                <motion.div
+                    className="mb-12 text-center"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                >
+                    <motion.div
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neon-cyan/30 bg-neon-cyan/5 mb-6 backdrop-blur-sm"
+                        variants={{
+                            hidden: { opacity: 0, scale: 0.8, rotate: -15 },
+                            visible: { opacity: 1, scale: 1, rotate: 0 }
+                        }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                    >
+                        <Terminal className="w-4 h-4 text-neon-cyan" />
+                        <span className="text-xs font-mono uppercase tracking-widest text-neon-cyan">System Profile</span>
+                    </motion.div>
 
-                <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+                    <motion.h2
+                        variants={{
+                            hidden: { opacity: 0, y: 30 },
+                            visible: { opacity: 1, y: 0 }
+                        }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+                        className="font-display text-5xl font-bold uppercase text-white md:text-7xl mb-6"
+                    >
+                        System <span className="text-neon-cyan">Identity</span>
+                    </motion.h2>
+
+                    <motion.p
+                        variants={{
+                            hidden: { opacity: 0, y: 20 },
+                            visible: { opacity: 1, y: 0 }
+                        }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
+                        className="text-zinc-400 max-w-xl mx-auto text-lg"
+                    >
+                        Bridging the gap between robust architecture and fluid motion.
+                    </motion.p>
+                </motion.div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
 
                     {/* Left: Terminal Info */}
                     <div className="order-2 lg:order-1 w-full rounded-xl border border-white/10 bg-[#0d0d0d] shadow-2xl overflow-hidden relative group h-full flex flex-col">
@@ -29,9 +71,9 @@ export default function AboutTerminal() {
                         {/* Terminal Content */}
                         <div className="relative p-6 font-mono text-sm md:text-base text-zinc-300 space-y-6 z-10 bg-[#050505]/90 flex-1 flex flex-col">
                             <div className="space-y-2 flex-1">
-                                <div className="flex gap-2 text-green-400">
+                                <div className="flex gap-2 text-acid-green">
                                     <span>➜</span>
-                                    <span className="text-blue-400">~</span>
+                                    <span className="text-neon-cyan">~</span>
                                     <span>whoami</span>
                                 </div>
                                 <TypewriterText
@@ -45,7 +87,7 @@ export default function AboutTerminal() {
                                 <div className="grid grid-cols-2 gap-4">
                                     <StatMetric label="Uptime" value="5" suffix=" Years" icon={Clock} color="text-neon-cyan" />
                                     <StatMetric label="Projects" value="40" suffix="+" icon={Code} color="text-neon-violet" />
-                                    <StatMetric label="Availability" value="100" suffix="%" icon={Activity} color="text-acid-green" />
+                                    <StatMetric label="Availability" value="100" suffix="%" icon={Activity} color="text-neon-cyan" />
                                     <StatMetric label="Perf Score" value="100" suffix="" icon={Zap} color="text-neon-cyan" />
                                 </div>
                             </div>
@@ -101,7 +143,7 @@ function SystemSpecs() {
                     <div className="flex-1 text-zinc-300 leading-relaxed overflow-x-auto whitespace-pre">
                         <div><span className="text-neon-violet">const</span> <span className="text-white">USER_PROFILE</span> = {"{"}</div>
                         <div className="pl-4">
-                            <span className="text-neon-cyan">name</span>: <span className="text-acid-green">"Al-Amin"</span>,
+                            <span className="text-neon-cyan">name</span>: <span className="text-acid-green">"Md Abu Hujaifa"</span>,
                         </div>
                         <div className="pl-4">
                             <span className="text-neon-cyan">role</span>: <span className="text-acid-green">"Full Stack Developer"</span>,

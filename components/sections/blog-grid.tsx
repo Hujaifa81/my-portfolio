@@ -4,23 +4,12 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Calendar, Clock, ArrowUpRight, Cpu, Zap } from "lucide-react";
+import { Calendar, Clock, ArrowUpRight, Cpu, Zap, Newspaper } from "lucide-react";
 import type { BlogPost } from "@/lib/blog-types";
 
 interface BlogGridProps {
   posts: BlogPost[];
 }
-
-// Glitch text component
-const GlitchText = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <span className="relative inline-block">
-      <span className="glitch-text" data-text={children}>
-        {children}
-      </span>
-    </span>
-  );
-};
 
 // Neural connection lines that appear on hover between cards
 const NeuralLines = ({ isActive }: { isActive: boolean }) => {
@@ -108,9 +97,8 @@ const BlogCard = ({
 
       <Link href={`/blog/${post.slug}`} className="block h-full">
         <div
-          className={`relative h-full flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-neon-cyan/40 hover:bg-white/[0.05] ${
-            isFeatured ? "min-h-[450px] md:min-h-[520px]" : "min-h-[380px]"
-          }`}
+          className={`relative h-full flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-neon-cyan/40 hover:bg-white/[0.05] ${isFeatured ? "min-h-[450px] md:min-h-[520px]" : "min-h-[380px]"
+            }`}
         >
           {/* Cover image */}
           <div className={`relative ${isFeatured ? "h-56 md:h-72" : "h-44 md:h-48"} flex-shrink-0 overflow-hidden`}>
@@ -183,24 +171,23 @@ const BlogCard = ({
 
             {/* Title */}
             <h3
-              className={`font-bold font-clash text-white mb-2 group-hover:text-neon-cyan transition-colors duration-300 line-clamp-2 ${
-                isFeatured ? "text-2xl md:text-3xl" : "text-lg md:text-xl"
-              }`}
+              className={`font-bold font-clash text-white mb-2 group-hover:text-neon-cyan transition-colors duration-300 line-clamp-2 ${isFeatured ? "text-2xl md:text-3xl" : "text-lg md:text-xl"
+                }`}
             >
               {post.title}
             </h3>
 
-            {/* Excerpt with inline Read More */}
+            {/* Excerpt with Read More on same line (Read More + arrow never wrap apart) */}
             <p
-              className={`text-white/50 leading-relaxed ${
-                isFeatured ? "text-sm md:text-base" : "text-sm"
-              }`}
+              className={`text-white/50 leading-relaxed ${isFeatured ? "text-sm md:text-base" : "text-sm"
+                }`}
             >
-              {post.excerpt.length > (isFeatured ? 120 : 80) 
-                ? post.excerpt.slice(0, isFeatured ? 120 : 80).trim() 
+              {post.excerpt.length > (isFeatured ? 110 : 70)
+                ? `${post.excerpt.slice(0, isFeatured ? 110 : 70).trim()}... `
                 : post.excerpt}
-              <span className="text-neon-cyan font-medium group-hover:text-white transition-colors duration-300">
-                {" "}... Read More <ArrowUpRight className="inline w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <span className="inline text-neon-cyan font-medium group-hover:text-white transition-colors duration-300">
+                Read More
+                <ArrowUpRight className="inline-block w-3 h-3 ml-0.5 mb-0.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </span>
             </p>
 
@@ -246,48 +233,56 @@ export default function BlogGrid({ posts }: BlogGridProps) {
     <section
       ref={sectionRef}
       id="blog"
-      className="relative min-h-screen py-32 overflow-hidden"
+      className="relative py-12 overflow-hidden"
     >
       {/* Background elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-0 w-96 h-96 bg-neon-cyan/5 rounded-full blur-[120px]" />
         <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-neon-violet/5 rounded-full blur-[120px]" />
 
-        {/* Grid background pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(0, 240, 255, 0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(0, 240, 255, 0.3) 1px, transparent 1px)
-            `,
-            backgroundSize: "60px 60px",
-          }}
-        />
+        <div className="absolute inset-0 bg-grid-pattern opacity-30" />
       </div>
 
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
-        {/* Section header */}
+      <div className="container mx-auto px-4 max-w-6xl relative z-10">
         <motion.div
-          className="text-center mb-16 md:mb-20"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
         >
-          <motion.span
-            className="inline-block text-neon-cyan/60 text-sm font-medium tracking-[0.3em] uppercase mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+          <motion.div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neon-cyan/30 bg-neon-cyan/5 mb-6 backdrop-blur-sm"
+            variants={{
+              hidden: { opacity: 0, scale: 0.8, rotate: -15 },
+              visible: { opacity: 1, scale: 1, rotate: 0 }
+            }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            [ Neural Feed ]
-          </motion.span>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold font-clash text-white mb-6">
-            <GlitchText>Digital Thoughts</GlitchText>
-          </h2>
-          <p className="text-white/50 max-w-2xl mx-auto text-lg">
+            <Newspaper className="w-4 h-4 text-neon-cyan" />
+            <span className="text-xs font-mono uppercase tracking-widest text-neon-cyan">Neural Feed</span>
+          </motion.div>
+
+          <motion.h2
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0 }
+            }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+            className="font-display text-5xl font-bold uppercase text-white md:text-7xl mb-6"
+          >
+            Digital <span className="text-neon-cyan">Thoughts</span>
+          </motion.h2>
+
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 }
+            }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
+            className="text-white/50 max-w-2xl mx-auto text-lg"
+          >
             Transmissions from the frontier of technology, design, and digital craft.
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Masonry-like Grid */}
