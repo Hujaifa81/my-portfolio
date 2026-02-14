@@ -82,14 +82,14 @@ export default function FloatingDock() {
     return (
         <nav
             aria-label="Main navigation"
-            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50"
+            className="fixed top-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-fit px-4"
         >
             <motion.ul
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: -40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: "backOut" }}
-                className="flex items-end gap-3 rounded-2xl border border-white/20 bg-white/10 bg-clip-padding p-3 shadow-xl backdrop-blur-2xl backdrop-saturate-150"
-                style={{ boxShadow: "0 8px 32px 0 rgba(0,255,255,0.10), 0 1.5px 8px 0 rgba(124,58,237,0.10)" }}
+                className="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 bg-clip-padding p-3 shadow-xl backdrop-blur-2xl backdrop-saturate-150"
+                style={{ boxShadow: "0 8px 32px 0 rgba(0,255,255,0.1) " }}
             >
                 {links.map((link, i) => (
                     <li key={link.label} className="relative">

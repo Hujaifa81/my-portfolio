@@ -189,7 +189,7 @@ function ContactInfoCard({
 
   const content = (
     <motion.div
-      className="group relative flex items-start gap-4 p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:border-neon-cyan/30 hover:bg-neon-cyan/5 transition-all duration-300 cursor-pointer"
+      className="group relative flex items-start gap-4 p-3 rounded-xl border border-white/10 bg-white/[0.02] hover:border-neon-cyan/30 hover:bg-neon-cyan/5 transition-all duration-300 cursor-pointer h-24 min-h-[6rem] max-h-24 w-full max-w-xs overflow-hidden"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -465,7 +465,7 @@ export default function Contact() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             {/* Quick info cards */}
-            <div className="space-y-4">
+            <div className="space-y-2 mt-2">
               <ContactInfoCard
                 icon={Mail}
                 label="Email"
